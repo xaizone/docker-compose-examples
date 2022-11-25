@@ -1,0 +1,31 @@
+entrypoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entrypoint:
+          to: websecure
+          scheme: https
+
+  websecure:
+    address: ":443"
+    http:
+      tls:
+        certresolver: cloudflare
+        domains:
+          - main: 'example.com'
+            sans: '*.example.com'
+
+providers:
+  docker: {}
+  file:
+    filename: /etc/traefik/dynamic.yml
+    watch: true
+
+certificatesresolvers:
+  cloudflare:
+    acme:
+      email: <REDACTED>
+      storage: /certs/cloudflare.json
+      dnschallenge:
+        provider: cloudflare

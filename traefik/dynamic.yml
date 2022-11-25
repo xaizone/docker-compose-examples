@@ -1,0 +1,36 @@
+tls:
+  options:
+    default:
+      sniStrict: true
+      minVersion: VersionTLS12
+      cipherSuites:
+        - TLS_AES_128_GCM_SHA256
+        - TLS_AES_256_GCM_SHA384
+        - TLS_CHACHA20_POLY1305_SHA256
+        - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+        - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+
+http:
+  middlewares:
+    compression:
+      compress:
+        minresponsebodybytes: 256
+
+    cache-header:
+      headers:
+        customresponseheaders:
+          cache-control: "max-age=86400,public"
+
+    security-header:
+      headers:
+        browserXssFilter: true
+        stspreload: true
+        stsincludesubdomains: true
+        stsseconds: 31536000
+        referrerPolicy: no-referrer
+        contentSecurityPolicy: upgrade-insecure-requests
+        customFrameOptionsValue: SAMEORIGIN
+        contentTypeNosniff: true
+        permissionsPolicy: "camera=(),geolocation=(),microphone=()"
