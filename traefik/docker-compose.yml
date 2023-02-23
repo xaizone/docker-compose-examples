@@ -7,13 +7,31 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    networks:
+      - proxy
     volumes:
-        - "/var/run/docker.sock:/var/run/docker.sock"
-        - "certs:/certs"
-        - "./traefik.yml:/etc/traefik/traefik.yml"
-        - "./dynamic.yml:/etc/traefik/dynamic.yml"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "~/certs:/certs"
+      - "./traefik.yml:/etc/traefik/traefik.yml"
+      - "./dynamic.yml:/etc/traefik/dynamic.yml"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.entrypoints=websecure"
+      - "traefik.http.routers.traefik.tls=true"
+      - "traefik.http.routers.traefik.tls.certresolver=cloudflare"
+      - "traefik.http.routers.traefik.tls.domains[0].main=example.com"
+      - "traefik.http.routers.traefik.tls.domains[0].sans=*.example.com"
     restart: unless-stopped
-    network_mode: "bridge"
 
-volumes:
-  certs:
+  traefik-certs-dumper:
+    container_name: traefik-certs-dumper
+    image: ldez/traefik-certs-dumper:latest
+    entrypoint: sh -c 'traefik-certs-dumper file --version v2 --watch --domain-subdir
+      --crt-ext=.pem --key-ext=.pem --source /data/cloudflare.json --dest /data/dump'
+    labels:
+      - "traefik.enable=false"
+    volumes:
+      - "~/certs:/data"
+      
+networks:
+  proxy:

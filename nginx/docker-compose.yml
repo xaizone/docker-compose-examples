@@ -1,0 +1,8 @@
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+      - ~/www/nginx:/www
+    restart: unless-stopped

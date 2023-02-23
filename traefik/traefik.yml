@@ -9,12 +9,6 @@ entrypoints:
 
   websecure:
     address: ":443"
-    http:
-      tls:
-        certresolver: cloudflare
-        domains:
-          - main: 'example.com'
-            sans: '*.example.com'
 
 providers:
   docker: {}
@@ -25,7 +19,7 @@ providers:
 certificatesresolvers:
   cloudflare:
     acme:
-      email: <REDACTED>
+      email: email@example.com
       storage: /certs/cloudflare.json
       dnschallenge:
         provider: cloudflare
