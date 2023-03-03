@@ -1,0 +1,11 @@
+services:
+  thelounge:
+    image: thelounge/thelounge:latest
+    container_name: thelounge
+    volumes:
+      - ./config.js:/var/opt/thelounge/config.js
+      - data:/var/opt/thelounge
+    restart: unless-stopped
+
+volumes:
+  data:
