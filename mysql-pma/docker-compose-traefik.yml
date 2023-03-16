@@ -1,0 +1,48 @@
+services:
+  mysql:
+    image: mysql
+    container_name: mysql
+    networks:
+      - link
+    ports:
+      - "3306:3306"
+    labels:
+      - "traefik.enable=false"
+    environment:
+      - MYSQL_ROOT_PASSWORD=securepassword
+      - MYSQL_DATABASE=app
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=securepassword
+    volumes:
+      - dbdata:/var/lib/mysql
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    networks:
+      - traefik_proxy
+      - link
+    depends_on:
+      - mysql
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik_proxy"
+      - "traefik.http.routers.phpmyadmin.entrypoints=websecure"
+      - "traefik.http.routers.phpmyadmin.rule=Host(`pma.example.com`)"
+      - "traefik.http.routers.phpmyadmin.tls=true"
+      - "traefik.http.routers.phpmyadmin.tls.certresolver=cloudflare"
+    environment:
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+      - PMA_ABSOLUTE_URI=https://pma.example.com
+      - HIDE_PHP_VERSION=true
+    restart: unless-stopped
+
+volumes:
+  dbdata:
+
+networks:
+  traefik_proxy:
+    external: true
+  link:
