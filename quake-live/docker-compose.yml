@@ -1,0 +1,30 @@
+services:
+  ca1:
+    build: .
+    image: ql_ca
+    container_name: ql_ca1
+    restart: unless-stopped
+    ports:
+      - "27960:27960/udp"
+      - "27960:27960/tcp"
+      - "28960:28960"
+    environment:
+      - "NET_PORT=27960"
+      - "SV_HOSTNAME=xaizone's 4v4 #1"
+    volumes:
+      - "./access.txt:/home/steam/ql/baseq3/access.txt"
+      - "./server.cfg:/home/steam/ql/baseq3/server.cfg"
+      - "./mappool.txt:/home/steam/ql/baseq3/mappool.txt"
+      - "./plugins:/home/steam/ql/minqlx-plugins"
+    depends_on:
+      - redis
+
+  redis:
+    image: redis
+    container_name: ql_redis
+    restart: unless-stopped
+    volumes:
+      - redis:/data
+
+volumes:
+  redis:

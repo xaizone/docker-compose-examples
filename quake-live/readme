@@ -1,0 +1,14 @@
+# Docker Quake Live CA (Clan Arena) server
+
+Setting up a Quake Live Clan Arena server is now as simple as adjusting `server.cfg` and running `docker compose up -d`.
+
+This example comes with minqlx pre-installed and modern, standardized server plugins, like ELO balancing and Queue system.
+
+# Setup
+
+Parameters to change in `server.cfg`:
+ - qlx_owner
+ - zmq_rcon_password
+ - zmq_stats_password
+
+If you would like to have a minimum ELO limit, adjust `qlx_elo_limit_min` to your liking.
