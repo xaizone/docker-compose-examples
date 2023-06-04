@@ -1,0 +1,22 @@
+services:
+  rtsp-simple-server:
+    image: aler9/rtsp-simple-server
+    container_name: rtspss
+    networks:
+      - traefik_proxy
+    ports:
+      - "1935:1935"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.rtspss.entrypoints=websecure"
+      - "traefik.http.routers.rtspss.rule=Host(`stream.example.com`)"
+      - "traefik.http.routers.rtspss.tls.certresolver=cloudflare"
+      - "traefik.http.routers.rtspss.middlewares=compression@file,cache-header@file,security-header@file"
+      - "traefik.http.services.rtspss.loadbalancer.server.port=8888"
+    volumes:
+      - "./rtsp-simple-server.yml:/rtsp-simple-server.yml"
+    restart: unless-stopped
+
+networks:
+  traefik_proxy:
+    external: true

@@ -1,0 +1,10 @@
+services:
+  rtsp-simple-server:
+    image: aler9/rtsp-simple-server
+    container_name: rtspss
+    ports:
+      - "1935:1935"
+      - "8888:8888"
+    volumes:
+      - "./rtsp-simple-server.yml:/rtsp-simple-server.yml"
+    restart: unless-stopped

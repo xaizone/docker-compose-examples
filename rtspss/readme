@@ -1,0 +1,15 @@
+If you run this without traefik, you will need to provide certs for low latency HLS to work (or to even launch the container correctly) in `rtsp-simple-server.yml`, alternatively you can change the hlsVariant variable (line 140) to `mpegts`
+
+Also don't forget to change line 262 and 265 to something more secure!
+
+# OBS Setup
+
+Open Settings -> Stream and change the following settings:
+
+- Service: Custom...
+- Server: rtmp://example.com
+- Stream key: <name>?user=user&pass=verysecurepassword
+
+Now if you go live, you will be able to access your stream with the following:
+- https://example.com/<name> (HLS)
+- rtmp://example.com/<name> (RTMP)
