@@ -1,0 +1,47 @@
+route_tor = 0
+tor_port = 9150
+tor_control_port = 9151
+port_number = 8080
+
+allow_foreign_addresses = True
+allow_foreign_post_requests = True
+
+subtitles_mode = 0
+subtitles_language = 'en'
+
+related_videos_mode = 1
+
+comments_mode = 1
+enable_comment_avatars = True
+default_comment_sorting = 0
+
+theater_mode = True
+default_resolution = 1080
+autoplay_videos = False
+codec_rank_h264 = 3
+codec_rank_vp = 2
+codec_rank_av1 = 1
+prefer_uni_sources = 1
+use_video_hotkeys = True
+video_player = 1
+proxy_images = True
+
+use_comments_js = True
+use_sponsorblock_js = False
+
+theme = 2
+font = 0
+
+embed_page_mode = True
+autocheck_subscriptions = 1
+include_shorts_in_subscriptions = 0
+include_shorts_in_channel = 0
+
+# Developer use to debug 403s
+gather_googlevideo_domains = False
+
+# Save all responses from youtube for debugging
+debugging_save_responses = False
+
+# Do not change, remove, or comment out this value, or else your settings may be lost or corrupted
+settings_version = 5

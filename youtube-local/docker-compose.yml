@@ -1,0 +1,9 @@
+services:
+  yt-local:
+    build: ./dockerfile
+    container_name: yt-local
+    image: yt-local
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+
